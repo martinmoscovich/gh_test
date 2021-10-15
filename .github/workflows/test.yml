@@ -19,7 +19,7 @@ jobs:
         with:
           path: src
           file_pattern: '*'
-          prefix: '@{¿
+          prefix: '@{'
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
