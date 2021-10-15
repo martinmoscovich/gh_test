@@ -26,3 +26,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dist_dir: src
           to: main
+          envsubst: true
