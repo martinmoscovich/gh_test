@@ -1,0 +1,24 @@
+name: Test workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract branch or tag name
+        uses: tj-actions/branch-names@v5
+        id: extract_branch
+
+      - name: Deploy to GH Pages
+        uses: martinmoscovich/gh-actions/gh-deploy@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dist_dir: src
+          to: main
