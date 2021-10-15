@@ -14,19 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v2
+      - name: Substitute Environment Variables in files
+        uses: martinmoscovich/gh-actions/envsubst@main
         with:
-          name: production-files
-          path: ./src
+          path: src
+          file_pattern: '*'
+          prefix: '@{¿
 
-      - name: Deploy to GH Pages
-        uses: martinmoscovich/gh-actions/gh-deploy@main
-        env:
-          SOME_NAME: Martin
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dist_dir: src
-          to: main
-          envsubst: true
-          envsubst_prefix: '@{'
+          publish_dir: ./src
+          destination_dir: ./main
+
