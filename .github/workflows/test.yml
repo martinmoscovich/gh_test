@@ -17,7 +17,7 @@ jobs:
       - name: Substitute Environment Variables in files
         uses: martinmoscovich/gh-actions/envsubst@main
         with:
-          path: '${{ GITHUB_WORKSPACE }}/src'
+          path: '${{ env.GITHUB_WORKSPACE }}/src'
           file_pattern: '*'
           prefix: '@{'
 
