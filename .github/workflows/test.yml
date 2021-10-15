@@ -22,8 +22,11 @@ jobs:
 
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@main
+        env:
+          SOME_NAME: Martin
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dist_dir: src
           to: main
           envsubst: true
+          envsubst_prefix: '@{'
