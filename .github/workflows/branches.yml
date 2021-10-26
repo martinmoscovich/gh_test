@@ -1,4 +1,4 @@
-name: Branches workflow
+name: Main branch and PRs workflow
 
 # Runs when commits are pushed to the main branch or to a branch associated with a PRs that targets the main branch
 # - Checkouts the pushed branch
