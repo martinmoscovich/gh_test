@@ -15,7 +15,7 @@ jobs:
     with:
       node_version: 14
       dist_dir: build
-      source_ref: master
+      source_ref: main
 
   release:
     name: Release
@@ -26,7 +26,7 @@ jobs:
       - name: Create release
         uses: martinmoscovich/gh-actions/release@main
         with:
-          source_ref: master
+          source_ref: main
           dist_dir: build
           tag: ${{ github.event.milestone.title }}
           description: ${{ github.event.milestone.description }}
