@@ -1,0 +1,23 @@
+{
+  "name": "gh_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx mkdirp dist && cp src/index.html dist/",
+    "test": "echo \"No Tests\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinmoscovich/gh_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martinmoscovich/gh_test/issues"
+  },
+  "homepage": "https://github.com/martinmoscovich/gh_test#readme",
+  "devDependencies": {
+    "mkdirp": "^1.0.4"
+  }
+}
