@@ -10,10 +10,6 @@ on:
         description: 'Release version tag'
         required: true
 
-env:
-  DIST_DIR: build
-  DEPLOYMENT_PATH: staging
-
 jobs:
   promote:
     name: Promote to Staging

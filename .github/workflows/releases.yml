@@ -14,7 +14,7 @@ jobs:
     uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@main
     with:
       node_version: 14
-      dist_dir: build
+      dist_dir: dist
       source_ref: main
 
   release:
