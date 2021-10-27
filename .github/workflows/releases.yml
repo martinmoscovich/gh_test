@@ -27,10 +27,10 @@ jobs:
         uses: martinmoscovich/gh-actions/release@main
         with:
           source_ref: main
-          dist_dir: dist
           tag: ${{ github.event.milestone.title }}
-          description: ${{ github.event.milestone.description }}
           release_filename: ${{ github.event.repository.name }}-${{ github.event.milestone.title }}
+          description: ${{ github.event.milestone.description }}
+        secrets:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
@@ -42,6 +42,6 @@ jobs:
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
-          dist_dir: dist
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           to: releases/${{ github.event.milestone.title }}
+        secrets:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -31,9 +31,9 @@ jobs:
       - name: Create release
         uses: martinmoscovich/gh-actions/release@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dist_dir: dist
           release_filename: ${{ github.event.repository.name }}-${{ steps.extract_branch.outputs.current_branch }}
+        secrets:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: Deploy
@@ -48,6 +48,6 @@ jobs:
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dist_dir: dist
           to: releases/${{ steps.extract_branch.outputs.current_branch }}
+        secrets:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

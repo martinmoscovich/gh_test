@@ -29,6 +29,6 @@ jobs:
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dist_dir: dist
           to: tags/${{ steps.extract_branch.outputs.current_branch }}
+        secrets:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
