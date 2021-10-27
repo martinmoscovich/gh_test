@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: Build
     uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@v1
     with:
       node_version: 14
