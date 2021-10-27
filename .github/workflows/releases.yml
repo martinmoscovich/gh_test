@@ -30,7 +30,6 @@ jobs:
           tag: ${{ github.event.milestone.title }}
           release_filename: ${{ github.event.repository.name }}-${{ github.event.milestone.title }}
           description: ${{ github.event.milestone.description }}
-        secrets:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
@@ -43,5 +42,4 @@ jobs:
         uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
           to: releases/${{ github.event.milestone.title }}
-        secrets:
           github_token: ${{ secrets.GITHUB_TOKEN }}
