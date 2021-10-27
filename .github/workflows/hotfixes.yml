@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@main
+    uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@v1
     with:
       node_version: 14
       dist_dir: dist
@@ -29,7 +29,7 @@ jobs:
         id: extract_branch
 
       - name: Create release
-        uses: martinmoscovich/gh-actions/release@main
+        uses: martinmoscovich/gh-actions/release@v1
         with:
           release_filename: ${{ github.event.repository.name }}-${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
         id: extract_branch
 
       - name: Deploy to GH Pages
-        uses: martinmoscovich/gh-actions/gh-deploy@main
+        uses: martinmoscovich/gh-actions/gh-deploy@v1
         with:
           to: releases/${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
