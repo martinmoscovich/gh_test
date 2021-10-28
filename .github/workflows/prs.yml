@@ -34,4 +34,4 @@ jobs:
           environment_name: dev-${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
-      
+
