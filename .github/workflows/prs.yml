@@ -35,6 +35,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           desc: Dev - ${{ steps.extract_branch.outputs.current_branch }}
           env: dev-${{ steps.extract_branch.outputs.current_branch }}
+          ref: ${{ github.head_ref }}
 
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@v1
@@ -50,3 +51,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://${{ github.event.repository.owner }}.github.io/${{ github.event.repository.name }}/branches/${{ steps.extract_branch.outputs.current_branch }}
