@@ -27,28 +27,11 @@ jobs:
         uses: tj-actions/branch-names@v5
         id: extract_branch
         
-      - name: start deployment
-        uses: bobheadxi/deployments@v0.4.3
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          desc: Dev - ${{ steps.extract_branch.outputs.current_branch }}
-          env: dev-${{ steps.extract_branch.outputs.current_branch }}
-          ref: ${{ github.head_ref }}
-
       - name: Deploy to GH Pages
-        uses: martinmoscovich/gh-actions/gh-deploy@v1
+        uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
+          environment_name: dev-${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: update deployment status
-        uses: bobheadxi/deployments@v0.4.3
-        if: always()
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}/branches/${{ steps.extract_branch.outputs.current_branch }}
+
