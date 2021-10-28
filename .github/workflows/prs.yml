@@ -26,9 +26,27 @@ jobs:
       - name: Extract branch or tag name
         uses: tj-actions/branch-names@v5
         id: extract_branch
+        
+      - name: start deployment
+        uses: bobheadxi/deployments@v0.4.3
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          desc: Dev - ${{ steps.extract_branch.outputs.current_branch }}
+          env: dev-${{ steps.extract_branch.outputs.current_branch }}
 
       - name: Deploy to GH Pages
         uses: martinmoscovich/gh-actions/gh-deploy@v1
         with:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: update deployment status
+        uses: bobheadxi/deployments@v0.4.3
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
