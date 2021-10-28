@@ -13,7 +13,7 @@ on:
 jobs:
   promote:
     name: Promote to Staging
-    uses: martinmoscovich/gh-actions/.github/workflows/promote.yml@v1
+    uses: martinmoscovich/gh-actions/.github/workflows/promote.yml@main
     with:
       to: staging
       tag: ${{ github.event.inputs.release-version }}
