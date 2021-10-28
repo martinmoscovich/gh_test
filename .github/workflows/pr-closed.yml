@@ -13,7 +13,6 @@ on:
 jobs:
   prune:
     name: Prune
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
