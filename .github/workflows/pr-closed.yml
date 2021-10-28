@@ -1,4 +1,4 @@
-name: PRs workflow
+name: PRs closed
 
 # Runs when commits are pushed to a branch associated with a PRs that targets the main branch
 # - Checkouts the pushed branch
@@ -6,19 +6,13 @@ name: PRs workflow
 # - Deploys the application to Github Pages (branches/[branch name])
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [closed]
     branches:
       - main
 
 jobs:
-  build:
-    uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@v1
-    with:
-      node_version: 14
-      dist_dir: dist
-
-  deploy:
-    name: Deploy
+  prune:
+    name: Prune
     needs: build
     runs-on: ubuntu-latest
 
@@ -27,11 +21,9 @@ jobs:
         uses: tj-actions/branch-names@v5
         id: extract_branch
         
-      - name: Deploy to GH Pages
-        uses: martinmoscovich/gh-actions/gh-deploy@main
+      - name: Prunes enviroment and files
+        uses: martinmoscovich/gh-actions/prune-deployment@main
         with:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
           environment_name: branch-${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          
-
