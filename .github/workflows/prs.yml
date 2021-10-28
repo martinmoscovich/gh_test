@@ -27,7 +27,7 @@ jobs:
         uses: tj-actions/branch-names@v5
         id: extract_branch
         
-      - name: start deployment
+      - name: Start deployment
         uses: bobheadxi/deployments@v0.4.3
         id: deployment
         with:
@@ -44,7 +44,7 @@ jobs:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: update deployment status
+      - name: Update deployment status
         uses: bobheadxi/deployments@v0.4.3
         if: always()
         with:
