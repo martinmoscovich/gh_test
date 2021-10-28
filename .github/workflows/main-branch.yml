@@ -31,4 +31,5 @@ jobs:
         uses: martinmoscovich/gh-actions/gh-deploy@v1
         with:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
+          environment_name: develop
           github_token: ${{ secrets.GITHUB_TOKEN }}
