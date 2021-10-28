@@ -51,4 +51,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: https://${{ github.event.repository.owner }}.github.io/${{ github.event.repository.name }}/branches/${{ steps.extract_branch.outputs.current_branch }}
+          env_url: https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}/branches/${{ steps.extract_branch.outputs.current_branch }}
