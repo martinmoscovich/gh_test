@@ -33,7 +33,7 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          desc: Dev - ${{ steps.extract_branch.outputs.current_branch }}
+          desc: ${{ true && github.head_ref ||  github.ref   }}
           env: dev-${{ steps.extract_branch.outputs.current_branch }}
           ref: ${{ github.head_ref }}
           no_override: true
