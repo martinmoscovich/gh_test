@@ -28,7 +28,7 @@ jobs:
         id: extract_branch
 
       - name: Deploy to GH Pages
-        uses: martinmoscovich/gh-actions/gh-deploy@v1
+        uses: martinmoscovich/gh-actions/gh-deploy@main
         with:
           to: branches/${{ steps.extract_branch.outputs.current_branch }}
           environment_name: develop
