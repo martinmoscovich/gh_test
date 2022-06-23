@@ -12,24 +12,19 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const query = `{ search(first: 100, type: ISSUE, query: "is:pr $user:String! $repo:$String! $milestone:String!") {
-              edges {
-                node {
-                  ... on PullRequest {
-                    number
-                    title
-                    body
+            const query = `query issuesForMilestone($searchQuery: String!) {
+                search(first: 100, type: ISSUE, query: $searchQuery) {
+                  edges {
+                    node {
+                      ... on PullRequest {
+                        number
+                        title
+                        body
+                      }
+                    }
                   }
                 }
-              }
-              }
-            }`;
+            }`
 
-            
-            const variables = {
-              user: context.repo.owner,
-              repo: context.repo.repo,
-              milestone: context.payload.milestone.title
-            }
-            const result = await github.graphql(query, variables)
+            const result = await github.graphql(query, {searchQuery: `is:pr user:${owner} repo:${repo} milestone:${milestoneName}`})
             console.log(result)
