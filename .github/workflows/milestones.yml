@@ -24,6 +24,8 @@ jobs:
               }
             }`;
 
+            console.log(context.payload)
+            
             const variables = {
               owner: context.repo.owner,
               name: context.repo.repo,
