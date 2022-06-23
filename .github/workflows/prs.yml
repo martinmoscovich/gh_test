@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check milestone
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const { data } = await github.request("GET /repos/{owner}/{repo}/pulls/{pr}", {
