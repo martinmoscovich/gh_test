@@ -12,20 +12,67 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const query = `query issuesForMilestone($searchQuery: String!) {
-                search(first: 100, type: ISSUE, query: $searchQuery) {
-                  edges {
-                    node {
-                      ... on PullRequest {
-                        number
-                        title
-                        body
+            const prs = await getPRsForMilestone(
+              context.repo.owner,
+              context.repo.repo,
+              context.payload.milestone.title
+            );
+
+            const items = prs
+              .map((item) => {
+                let issueLink = item.issueUrl
+                  ? `[${item.issueName}](${item.issueUrl})`
+                  : item.issueName;
+                return `- ${item.title}${issueLink ? ` (${issueLink})` : ""}`;
+              })
+              .join("\n");
+
+            let releaseNotes = `Release ${milestoneName}\n\n## Scope:\n${items} `;
+
+            console.log(releaseNotes);
+            
+            async function getPRsForMilestone(owner, repo, milestoneName) {
+              const query = `query issuesForMilestone($searchQuery: String!) {
+                  search(first: 100, type: ISSUE, query: $searchQuery) {
+                    edges {
+                      node {
+                        ... on PullRequest {
+                          number
+                          title
+                          body
+                        }
                       }
                     }
                   }
-                }
-            }`
+              }`;
 
-            const searchQuery = `is:pr user:${context.repo.owner} repo:${context.repo.repo} milestone:${context.payload.milestone.title}`;
-            const result = await github.graphql(query, {searchQuery});
-            console.log(result)
+              const searchQuery = `is:pr user:${owner} repo:${repo} milestone:${milestoneName}`;
+              const result = await github.graphql(query, {searchQuery});
+              
+              return result.search.edges.map((item) => {
+                const pr = item.node;
+                const body = pr.body;
+                let match = /https:\/\/jira[^\/]+\/browse\/([A-Z]+-(\d+))/i.exec(body);
+                if (!match) match = /#(\d+)/.exec(body);
+
+                let issueName, issueNumber, issueUrl;
+                if (match) {
+                  issueName = match.length > 2 ? match[1] : match[0];
+                  issueNumber = match.length > 2 ? match[2] : match[1];
+                  issueUrl = match.length > 2 ? match[0] : null;
+                }
+
+                return {
+                  number: pr.number,
+                  title: pr.title.replace(
+                    new RegExp(`^(${issueNumber}|${issueName})\\s*-\\s*(.*)`),
+                    (match, _, title) => title ?? match
+                  ),
+                  issueName: issueName ?? `#${pr.number}`,
+                  issueUrl,
+                };
+              });
+            }
+            
+            
+            
