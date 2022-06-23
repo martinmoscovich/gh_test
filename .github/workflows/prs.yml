@@ -11,6 +11,24 @@ on:
       - main
 
 jobs:
+  milestone:
+    name: Check if milestone is set
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check milestone
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { data } = await github.request("GET /repos/{owner}/{repo}/pulls/{pr}", {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pr: context.payload.pull_request.number
+            });
+            if (data.milestone) {
+              core.info(`This pull request has a milestone set: ${data.milestone.title}`);
+            } else {
+              core.setFailed(`A maintainer needs to set the milestone for this pull request.`);
+            }
   build:
     uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@v1
     with:
