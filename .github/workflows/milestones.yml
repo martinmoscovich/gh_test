@@ -3,7 +3,7 @@ name: Test Milestone
 
 on:
   milestone:
-    types: [opened]
+    types: [created, opened, edited]
 
 jobs:
   list-issues:
