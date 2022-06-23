@@ -76,6 +76,9 @@ jobs:
               });
             }
    
+  log-issues:
+    runs-on: ubuntu-latest
+    steps:
       - run: echo "The output is ${{ steps.list-issues.outputs.release_notes }}"       
             
             
