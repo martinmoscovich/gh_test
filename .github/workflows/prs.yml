@@ -30,6 +30,7 @@ jobs:
               core.setFailed(`A maintainer needs to set the milestone for this pull request.`);
             }
   build:
+    needs: milestone
     uses: martinmoscovich/gh-actions/.github/workflows/npm-build.yml@v1
     with:
       node_version: 14
