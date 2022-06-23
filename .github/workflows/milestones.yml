@@ -31,7 +31,7 @@ jobs:
             const milestoneDescription = ms.description ? `\n\n${ms.description}` : '';
             const releaseNotes = `Release ${context.payload.milestone.title}${milestoneDescription}\n\n## Scope:\n${items} `;
 
-            console.log(releaseNotes);
+            core.setOutput('release_notes', releaseNotes);
             
             async function getPRsForMilestone(owner, repo, milestoneName) {
               const query = `query issuesForMilestone($searchQuery: String!) {
@@ -75,6 +75,7 @@ jobs:
                 };
               });
             }
-            
+   
+      - run: echo "The output is ${{ steps.list-issues.outputs.release_notes }}"       
             
             
