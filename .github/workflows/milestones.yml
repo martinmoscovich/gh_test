@@ -26,6 +26,6 @@ jobs:
                 }
             }`
 
-            const searchQuery: `is:pr user:${context.repo.owner} repo:${context.repo.repo} milestone:${context.payload.milestone.title}`;
+            const searchQuery = `is:pr user:${context.repo.owner} repo:${context.repo.repo} milestone:${context.payload.milestone.title}`;
             const result = await github.graphql(query, {searchQuery});
             console.log(result)
