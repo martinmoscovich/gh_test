@@ -27,8 +27,8 @@ jobs:
 
             
             const variables = {
-              owner: context.repo.owner,
-              name: context.repo.repo,
+              user: context.repo.owner,
+              repo: context.repo.repo,
               milestone: context.payload.milestone.title
             }
             const result = await github.graphql(query, variables)
