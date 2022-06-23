@@ -12,11 +12,11 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            console.log(JSON.stringify(context.payload.milestone, null, 2));
+            const ms = context.payload.milestone;
             const prs = await getPRsForMilestone(
               context.repo.owner,
               context.repo.repo,
-              context.payload.milestone.title
+              ms.title
             );
 
             const items = prs
@@ -28,7 +28,8 @@ jobs:
               })
               .join("\n");
 
-            let releaseNotes = `Release ${context.payload.milestone.title}\n\n## Scope:\n${items} `;
+            const milestoneDescription = ms.description ? `\n\n${ms.description}` : '';
+            const releaseNotes = `Release ${context.payload.milestone.title}${milestoneDescription}\n\n## Scope:\n${items} `;
 
             console.log(releaseNotes);
             
