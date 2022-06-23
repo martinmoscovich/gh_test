@@ -12,7 +12,7 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const query = `search(first: 100, type: ISSUE, query: "is:pr $user:String! $repo:$String! $milestone:String!") {
+            const query = `{ search(first: 100, type: ISSUE, query: "is:pr $user:String! $repo:$String! $milestone:String!") {
               edges {
                 node {
                   ... on PullRequest {
@@ -21,6 +21,7 @@ jobs:
                     body
                   }
                 }
+              }
               }
             }`;
 
