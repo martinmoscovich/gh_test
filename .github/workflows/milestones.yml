@@ -1,0 +1,33 @@
+name: Test Milestone
+
+
+on:
+  milestone:
+    types: [opened]
+
+jobs:
+  list-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const query = `search(first: 100, type: ISSUE, query: "is:pr $user:String! $repo:$String! $milestone:String!") {
+              edges {
+                node {
+                  ... on PullRequest {
+                    number
+                    title
+                    body
+                  }
+                }
+              }
+            }`;
+
+            const variables = {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+              milestone: context.milestone.title
+            }
+            const result = await github.graphql(query, variables)
+            console.log(result)
